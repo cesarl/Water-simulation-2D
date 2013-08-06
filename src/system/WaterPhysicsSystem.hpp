@@ -37,7 +37,7 @@ public:
 
     glm::vec2 relV = w2.force - w1.force;
     float relNv = glm::dot(relV, contact.normal);
-    float remove = relNv + contact.dist;// / time; /// dt // dt = le temp je coirs
+    float remove = relNv + contact.dist;// / time; /// dt // dt = le temp je crois
     if (remove < 0)
       {
 	float impulse = remove * 0.8f;
@@ -53,6 +53,20 @@ public:
   {
     WaterBox			*wb = ComponentManager::getInstance().getComponent<WaterBox>(entity);
 
+    if ((int)al_get_time() % 3 == 0)
+      {
+	wb->dim.x *= 0.999;
+      }
+    else if ((int)al_get_time() % 5 == 0)
+      {
+	wb->addExplosion(10000);
+      }
+    else if ((int)al_get_time() % 7 == 0)
+      {
+	wb->dim.x *= 1.005;
+      }
+
+
     WaterBox::spIt		spIt = wb->spaceGrid.begin();
     while (spIt != wb->spaceGrid.end())
       {
@@ -62,12 +76,12 @@ public:
 
     unsigned int cellSize = wb->density * 5;
     glm::vec2 halfSize = glm::vec2(wb->density, wb->density) / 2.0f;
-
+    glm::vec2 from, to;
     for (unsigned int i = 0; i < wb->list.size(); ++i)
       {
-	glm::vec2 from = wb->list[i].pos - halfSize;
+	from = wb->list[i].pos - halfSize;
 	from /= cellSize;
-	glm::vec2 to = wb->list[i].pos + halfSize;
+	to = wb->list[i].pos + halfSize;
 	to /= cellSize;
 
 	for (int h = from.x; h <= to.x; ++h)

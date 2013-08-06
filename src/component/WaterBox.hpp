@@ -81,6 +81,11 @@ struct				WaterBox : public Component<WaterBox>
     worldForce(glm::vec2(0.0f, 0.0f))
   {}
 
+  void				addExplosion(int force)
+  {
+    list[rand() % list.size()].force = glm::vec2((- force / 2 + rand() % force) / 10.0f, (- force / 2 + rand() % force) / 10.0f);
+  }
+
   void				set(const glm::vec2 & _pos, const glm::vec2 & _dim, unsigned int _n = 100)
   {
     pos = _pos;

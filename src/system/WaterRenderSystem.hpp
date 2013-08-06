@@ -5,21 +5,29 @@
 #include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
-
 // for dbug purpose
 void				drawCircle(const glm::vec2 & pos, float radius)
 {
-  glPushMatrix();
-  glTranslatef(pos.x, pos.y, 0.0f);
-  glBegin(GL_LINE_LOOP);
-  glColor3f(1.0f, 1.0f, 1.0f);
-  for (int i = 0; i < 360; ++i)
-    {
-      float degInRad = i * 3.14159 / 180;
-      glVertex2f(cos(degInRad) * radius, sin(degInRad) * radius);
-    }
-  glEnd();
-  glPopMatrix();
+  float num_segments = 8;
+  float theta = 2 * 3.1415926 / (float)num_segments; 
+  float c = cosf(theta);//precalculate the sine and cosine
+  float s = sinf(theta);
+  float t;
+
+  float x = radius;//we start at angle = 0 
+  float y = 0; 
+
+  glBegin(GL_LINE_LOOP); 
+  for(int ii = 0; ii < num_segments; ii++) 
+    { 
+      glVertex2f(x + pos.x, y + pos.y);//output vertex 
+        
+      //apply the rotation matrix
+      t = x;
+      x = c * x - s * y;
+      y = s * t + c * y;
+    } 
+  glEnd(); 
 }
 
 class				WaterRenderSystem : public System
@@ -43,6 +51,7 @@ public:
     glTranslatef(wb->pos.x, wb->pos.y, 0.0f);
     while (it != wb->list.end())
       {
+	// glColor3f(it->force.y, - it->force.y, 1.0f);
     	drawCircle(it->pos, wb->density);
     	++it;
       }
