@@ -33,6 +33,7 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
       frames_done = 0;
       old_time = time;
       std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
+      (void)fps;
     }
   frames_done++;
 }
@@ -83,8 +84,8 @@ int					main()
   unsigned int e = EntityManager::getInstance().newEntity();
   WaterBox &wb = ComponentManager::getInstance().addComponent<WaterBox>(e);
 
-  wb.set(glm::vec2(30.0f, 30.0f), glm::vec2(500.0f, 300.0f), 300);
-  wb.setPhysics(glm::vec2(0.0f, -10.0f), 2.0f);
+  wb.set(glm::vec2(30.0f, 30.0f), glm::vec2(500.0f, 300.0f), 1000);
+  wb.setPhysics(glm::vec2(0.0f, -100.0f), 5.0f);
   (void)wb;
 
   try

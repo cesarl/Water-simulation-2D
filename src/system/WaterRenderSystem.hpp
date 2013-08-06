@@ -34,7 +34,7 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
+  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
   {
     WaterBox			*wb = ComponentManager::getInstance().getComponent<WaterBox>(entity);
     WaterBox::iterator		it = wb->list.begin();
@@ -43,17 +43,10 @@ public:
     glTranslatef(wb->pos.x, wb->pos.y, 0.0f);
     while (it != wb->list.end())
       {
-	drawCircle(it->pos, wb->density);
-	++it;
+    	drawCircle(it->pos, wb->density);
+    	++it;
       }
     glPopMatrix();
-    
-    // *color = Utils::lerp<Color>(eas->colorOrigin, eas->color, eas->duration, eas->time);
-
-    // eas->time = (float)eas->time + time;
-    // if (eas->time >= eas->duration)
-    //   ComponentManager::getInstance().removeComponent<ColorEasing>(entity);
-    (void)time;
     (void)entity;
   }
 

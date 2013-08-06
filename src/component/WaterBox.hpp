@@ -1,7 +1,7 @@
 #ifndef				__WATER_BOX_COMPONENT_HPP__
 # define			__WATER_BOX_COMPONENT_HPP__
 
-# define			GLM_FORCE_INLINE
+// # define			GLM_FORCE_INLINE
 # define			GLM_FORCE_RADIANS
 #include			<glm/glm.hpp>
 #include			<list>
@@ -30,6 +30,33 @@ struct				WaterParticle
     return *this;
   }
 };
+
+
+struct				Contact
+{
+  glm::vec2 normal;
+  float dist;
+  float impulse;
+  Contact() :
+    normal(glm::vec2(0.0f, 0.0f)),
+    dist(0),
+    impulse(0)
+  {}
+  Contact(const glm::vec2 &_normal, float _dist) :
+    normal(_normal),
+    dist(_dist),
+    impulse(0)
+  {}
+  Contact			&operator=(const Contact &o)
+  {
+    normal = o.normal;
+    dist = o.dist;
+    impulse = o.impulse;
+    return *this;
+  }
+
+};
+
 
 struct				WaterBox : public Component<WaterBox>
 {
